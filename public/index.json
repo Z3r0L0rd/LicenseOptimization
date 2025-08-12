@@ -1,0 +1,127 @@
+[
+{
+	"uri": "//localhost:1313/4-function/4.1-dashboard/",
+	"title": "Dashboard",
+	"tags": [],
+	"description": "",
+	"content": "Dashboard is where users can observe statistical charts for users who prefer visual graphics. The dashboard also displays the number of licenses in the database, total costs that licenses have used, license usage percentage, and the number of expired licenses.\n"
+},
+{
+	"uri": "//localhost:1313/3-ec2linking/3.1-linkingec2/",
+	"title": "EC2 Connection Guide",
+	"tags": [],
+	"description": "",
+	"content": " Objective: Access EC2 server terminal, clone project to the server and launch the app.\nAccess the EC2 service management console. Click to select an EC2 instance to run the app. Note: Make sure you have a public instance in running state with the keypair.pem file for that instance. If not, please refer to preparation steps\nRemember the Public IPv4 address of the server. Each time you stop/start the server, the public IPv4 will be turned off and changed, so remember to check regularly. Find the key pair file and connect to the server from your computer: Open terminal at the location containing the key pair file. After opening Terminal, enter the following command ssh -i \u0026quot;[keypair filename].pem\u0026quot; ec2-user@[Public IPv4]. Press yes if this is your first time connecting to EC2 via terminal so the computer can recognize the server IP. If your screen appears as shown above, congratulations. You have successfully connected to the EC2 server from your local machine. From now on, I will refer to the terminal window connected to EC2 as the server. Configure AWS on the server: Enter the command sudo yum install aws-cli -y to install AWS CLI. Enter the command aws configure to configure AWS CLI: Enter Access key ID and Secret access key saved in the .csv file from the IAM user creation step. Enter Default region name: us-east-1 which is the region where you created the EC2 instance. Enter Default output format: json. Users must configure AWS CLI to be able to launch the services in the app, otherwise the app will refuse to operate.\nClone project and run app from GitHub: Type the command sudo yum install git -y to install Git bash on the server. After installation is complete, clone the repo here using the command git clone https://github.com/Z3r0L0rd/license_optimize.git This is where the app source code is stored and is set to public permissions, so no git account is required to clone.\nEnter the command ls -li on the server to check for the appearance of the license_optimize file. Navigate into the file using the command cd license_optimize, then use the command ls -li again to see inside the directory. Enter the command chmod +x setup.sh and enter the command ./setup.sh to install dependencies and initialize the database. Then enter the command streamlit run streamlit_app.py --server.port=8501 --server.address=0.0.0.0 --server.headless=true to launch the app on the server. Check the app through the URL http://[IPv4-address]:8501 if you see as shown above, you have successfully run the app. You can stop the app using the key combination Ctrl + c on the terminal screen. Reminder: For errors that occur during the process, please check Troubleshooting\n"
+},
+{
+	"uri": "//localhost:1313/1-introduce/",
+	"title": "Introduction",
+	"tags": [],
+	"description": "",
+	"content": "License Optimization is a program created using Python and built on the AWS Cloud platform. License Optimization provides the ability to manage and track license quantities to optimize license costs, minimize compliance risks, and increase software resource utilization efficiency.\nProject Objectives:\nHigh license costs: Reduce license spending by 20-40%. Real-time analysis: Dashboard to monitor license usage. Compliance monitoring: Ensure compliance with license regulations. Main Features of the Project:\nCRUD operations for license information. Data tables to observe license information. Usage trend analysis over time. Measure usage efficiency and allow exporting information for auditing. Simple ML integration for analysis, suggestions, and predicting license usage needs for users. Risk reporting for license expiration warnings and detecting license compliance violations. Support for exporting and importing license files for backup (JSON, CSV, Excel), support for cloud storage through DynamoDB and S3. Store and display logs for troubleshooting and system maintenance. With these advantages, License Optimization can significantly reduce license distribution and auditing work to save time and costs for maintaining license operations.\nThis is only a demo product, features may not work perfectly, please do not use this project as an official product.\n"
+},
+{
+	"uri": "//localhost:1313/",
+	"title": "License Optimization",
+	"tags": [],
+	"description": "",
+	"content": "License Optimization with Usage Tracking Overview In this lab, you will learn how to download and build an app for license management and optimization, and monitor license usage tracking. Contents Introduction Preparation Steps Connect to EC2 Server App Features Resource Cleanup "
+},
+{
+	"uri": "//localhost:1313/4-function/4.2-licensemanage/",
+	"title": "License Management",
+	"tags": [],
+	"description": "",
+	"content": "License Management includes CRUD (Create-Read-Update-Delete) functions for licenses, updating licenses in real-time to AWS DynamoDB service.\nYou can add new licenses and the system will automatically update data to the Cloud. The website supports 3 types of registration: SUBSCRIPTION, PERPETUAL (one-time purchase) and CONCURRENT (simultaneous use). You can leave the expiration date blank and the app will understand that the license is valid indefinitely.\nYou can only update the number of licenses currently in use. "
+},
+{
+	"uri": "//localhost:1313/2-prerequiste/",
+	"title": "Preparation Steps",
+	"tags": [],
+	"description": "",
+	"content": "AWS Account To perform this workshop, you need an AWS account to access the AWS Management Console. If you don\u0026rsquo;t have an account yet, register at AWS. You may need to add an international payment card (Mastercard/Visa), but you can access and start using AWS services.\nStart registering today here from next month after July to have a chance to receive up to $200 credit to use for AWS services.\nBuild an EC2 instance You need to switch to the us-east-1 region when creating EC2 for the workshop to work\nTo learn how to create EC2 instances, you can refer to the lab Introduction to Amazon EC2\nIAM User To serve access to EC2, we need to have a User (User\u0026rsquo;s Access key). You can create a User through the following method:\nGo to the AWS Management Console page. Log in as root user. Authenticate login if available (should set up login methods). Enter IAM in the search bar and select the option as shown. In the left sidebar, click Users. Select Create user. Enter the User name you want to create then click Next. Note: If IAM user does not select Provide user access to the AWS Management Console-\u0026gt; I want to create an IAM user, the created User will not have a password or access to the Management Console. Here we only need the User\u0026rsquo;s Access Key so the account doesn\u0026rsquo;t need to be able to log in. If you want the account to be able to log in, you should select as above to add a password.\nIn the Permissions options section, select Attach Policies directly. Select the following policies in Permissions policies: AdministratorAccess to have the same permissions as root account. AmazonEC2FullAccess grants permission to create and manage EC2. AmazonDynamoDBFullAccess grants permission to create and manage Dynamo tables. AmazonS3FullAccess grants permission to create S3 buckets and upload documents. IAMFullAccess creates IAM roles, policies for roles. CloudWatchLogsFullAccess creates log groups. The CloudWatch functionality in the workshop is still under development so it may not work well.\nClick Next, review the added permissions then click Create user. Click on the added user (may need to refresh the page). Click Security credentials. Find the Access Keys section and click the Create access key button. At step 1, click the CLI option, confirm the selection then click Next. At step 2, enter Workshop demo in description or leave blank, click Create access key. At step 3, remember the Access key and Secret access key or simply select the Download .csv file button to download to your computer, then click done. Check the Access key again. You can create and use up to 2 access keys per user, remember to turn off/deactivate keys when not in use to prevent someone from \u0026ldquo;accidentally\u0026rdquo; using them for personal purposes and causing you to be charged.\nOther services used Although AWS services in this workshop are set up automatically, you can also learn about the services used:\nIntroduction to Amazon DynamoDB Introduction to Amazon S3 Introduction to CloudWatch This app uses some other technologies you might want to know about.\n"
+},
+{
+	"uri": "//localhost:1313/3-ec2linking/",
+	"title": "Server Connection",
+	"tags": [],
+	"description": "",
+	"content": "In this step, we will deploy an EC2 server and run the server on our local computer. Then we will set up the EC2 server to clone the project to the server and run it in the server environment.\nContents EC2 Connection Guide Troubleshooting "
+},
+{
+	"uri": "//localhost:1313/3-ec2linking/3.2-bugfixing/",
+	"title": "Troubleshooting",
+	"tags": [],
+	"description": "",
+	"content": "\rNote: The errors below were discovered and compiled while working on this Hugo site. If you find errors not listed here, please contact the post author or better yet, fix the error yourself and report it to the post author =/\nHere we will fix errors that appear while launching the app:\nUnable to connect to EC2 server error:\nCheck the region carefully: This app was created and only runs on the us-east-1 region. You can check this in the service window. Check that the keypair.pem file is placed in the correct location and has user access permissions. Ensure that the EC2 server is running and enter the correct public IPv4 address. Note that the public IPv4 will change each time the server is restarted. Check the Inbound rules of the Security Group that the server is using. You can access this through **Click select server -\u0026gt; select Security section -\u0026gt; Click on Security Group (created by default when creating the server). Required to set up 3 inbound IPv4 rules for the app to connect as shown above:\nOne IPv4 type SSH, running Port 22 can use My IP or 0.0.0.0/0 to connect to EC2 server more easily. One IPv4 type HTTPS, running Port 443 using IP 0.0.0.0/0. One IPv4 type custom TCP, running Port 8501, using IP 0.0.0.0/0 to be able to run web app connection easily. Note: You should only set up security groups like above in labs or demo projects because IP 0.0.0.0/0 will allow everyone to access and there is a high risk of system intrusion. If you want more security, use your own IP or the IP of those who have access to the server.\nServer cannot clone GitHub project / requires account login:\nTry reinstalling the latest Git with the command sudo yum install git -y and try again. If you have to log in to an account to clone, you probably didn\u0026rsquo;t clone my project. Make sure you read the instructions carefully and clone from https://github.com/Z3r0L0rd/license_optimize and don\u0026rsquo;t log into Git on the server because I\u0026rsquo;ve tried many times but still can\u0026rsquo;t log in. Cannot run app on server:\nNot being able to run the app on the server can include many causes, but I would like to divide it into 3 main causes: Setup reasons: Check the Inbound rules settings I mentioned in section 1, check AWS CLI configuration by entering complete access key and secret key information of the User and check if the key is activated, Make sure to write region us-east-1 in the region section. Wrong connection: The connection is http://[IPv4Address]:8501 where IPv4Address is the public address of the server IPv4 and 8501 is the Port that the app will run on, and has been specified in the Security Group settings. Code errors: If you have done the above steps correctly but still cannot run the app, it may be due to code errors. Check the dependency installation steps again, which will usually be automatically installed through the setup.sh file and run the command streamlit run streamlit_app.py --server.port=8501 --server.address=0.0.0.0 --server.headless=true again. "
+},
+{
+	"uri": "//localhost:1313/4-function/4.3-compliance/",
+	"title": "Compliance Check &amp; Analysis",
+	"tags": [],
+	"description": "",
+	"content": "Compliance Check is a function that helps users assess risks and compliance specified in license vendor contracts. This includes monitoring license usage periods, evaluating abnormal behaviors to protect users from legal issues regarding software usage rights.\nUsage Analysis is used to observe and report the number of licenses with low usage efficiency (below 30%) and high usage (over 95% of licenses used) and licenses that are about to expire.\n"
+},
+{
+	"uri": "//localhost:1313/4-function/",
+	"title": "App Features",
+	"tags": [],
+	"description": "",
+	"content": "The app page will display entered licenses in the form of charts and columns to help users view their license usage status. The app also supports importing and exporting information, storing user-entered information to send to the Cloud in case of emergencies, along with analysis and usage trend prediction functions to help users easily understand their license status and know the optimal choices in managing their license quantities most economically.\nGuide: When this website is first launched, it will not have any original data, requiring users to create new or use our sample data.\nWith the create new option, you should go to the System Setup section in the search bar and click the Create Database Table button before adding any new data. If you don\u0026rsquo;t really want to waste time creating sample data, you can access sample data to download and import in the Data Management section by dropping the file you downloaded and clicking the Import button. If you import sample files from another source, please ensure that the file follows the format of sample data otherwise the file will not import successfully. App Features Dashboard License Management Compliance Check \u0026amp; Analysis ML Recommendations Risk Management Import/Export Reports Log Monitoring System Functions "
+},
+{
+	"uri": "//localhost:1313/4-function/4.4-mlrecommend/",
+	"title": "ML Recommendations",
+	"tags": [],
+	"description": "",
+	"content": "ML Recommendations will use machine learning models to provide intelligent optimization suggestions, predict future license needs, detect abnormal usage, and suggest cost reduction methods for users.\n"
+},
+{
+	"uri": "//localhost:1313/4-function/4.5-riskassessment/",
+	"title": "Risk Management",
+	"tags": [],
+	"description": "",
+	"content": "Risk Management is a function that calculates risk scores from licenses and provides recommendations to minimize compliance risks.\n"
+},
+{
+	"uri": "//localhost:1313/5-cleanup/",
+	"title": "Resource Cleanup",
+	"tags": [],
+	"description": "",
+	"content": "We will perform the following steps to delete the resources we created in this workshop.\nDelete EC2 instance Access the EC2 service management interface Click Instances. Click to select the Public Linux Instance. Click Instance state. Click Terminate instance, then click Terminate to confirm. Click Users. Click to select the user you created. Click Delete, then enter the user name and click Delete to delete the user. Delete S3 bucket Access the S3 service management interface Click to select the S3 bucket we created for the workshop. (Example: license-optimization-storage) Click Empty. Enter permanently delete, then click Empty to delete objects in the bucket. Click Exit. After deleting all objects in the bucket, click Delete Enter the S3 bucket name, then click Delete bucket to delete the S3 bucket. Delete DynamoDB Access the DynamoDB service management interface Click Tables.\nClick to select the Table we created\nClick Delete. Enter Confirm and click the Delete button to confirm deletion.\n"
+},
+{
+	"uri": "//localhost:1313/4-function/4.6-ex-import/",
+	"title": "Import/Export Reports",
+	"tags": [],
+	"description": "",
+	"content": "Audit Reports, Data Management and S3 Storage are all functions used for data storage, data export and data backup depending on user choice.\nWith Data Management users can import data from one or more .csv format files into the app or export files for storage. With S3 Storage users can store their data on the Cloud, specifically S3 bucket, helping to better secure data and avoid data loss in case of server incidents. The app also provides an interface to search on S3 to simplify the data recovery process. With Audit Reports users can audit compliance and create reports on licenses. "
+},
+{
+	"uri": "//localhost:1313/4-function/4.7-log/",
+	"title": "Log Monitoring",
+	"tags": [],
+	"description": "",
+	"content": "Log Monitoring is a function for developers or maintainers to help people review system logs to easily track errors that appear while the app is running. These logs will be stored as files for convenient error information searching.\n"
+},
+{
+	"uri": "//localhost:1313/4-function/4.8-systemsetup/",
+	"title": "System Functions",
+	"tags": [],
+	"description": "",
+	"content": "Operations Center is where users can check the app\u0026rsquo;s operational capabilities, as well as check app health and recover the app in case of inability to connect to S3 storage.\nCheck system health to prevent app crashes due to not detecting issues in time. Create backup files and recover on local machine in case of emergencies. "
+},
+{
+	"uri": "//localhost:1313/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "//localhost:1313/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]

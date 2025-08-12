@@ -1,0 +1,127 @@
+[
+{
+	"uri": "//localhost:1313/vi/4-function/4.1-dashboard/",
+	"title": "Bảng điều khiển",
+	"tags": [],
+	"description": "",
+	"content": "Bảng điều khiển là nơi để người dùng có thể quan sát dưới dạng hình biểu đồ thống kê cho các người dùng thích hình ảnh trực quan. Bảng điều khiển còn thể hiện số license có trong cơ sở dữ liệu, tổng chi phí mà các license đã sử dụng, mức độ sử dụng license theo % và số license đã hết hạn.\n"
+},
+{
+	"uri": "//localhost:1313/vi/1-introduce/",
+	"title": "Giới thiệu",
+	"tags": [],
+	"description": "",
+	"content": "License Optimization là một chương trình được tạo ra sử dụng Python và xây dựng trên nền tảng AWS Cloud, License Optimization cung cấp khả năng quản lý và theo dõi số lượng license nhằm tối ưu hóa chi phí license, giảm thiểu rủi ro compliance và tăng hiệu quả s dụng tài nguyên phần mềm.\nMục tiêu mà Project hướng tới:\nChi phi license cao: Giảm thiểu chi tiêu cho license từ 20-40%. Phân tích theo thời gian thực: Dasboard để theo dõi lượng license sử dụng. Theo dõi tuân thủ: Đảm bảo tuân thủ theo các điều luật của license. Các Tính năng chính của Project:\nCRUD các thông tin về license. Có bảng dữ liệu để quan sát thông tin về các license. Phân tích xu hướng sử dụng theo thời gian. Đo lường hiệu quả sử dụng và cho phép xuất thông tin cho bên kiểm toán. Tích hợp ML đơn giản để phân tích, gợi ý,dự đoán nhu cầu sử dụng license cho người dùng. Báo cáo các rủi ro về cảnh báo hết hạn license, phát hiện các vi phạm tuân thủ license. Hỗ trợ xuất file và nhập file license để back-up(JSON,CSV,Excel), hỗ trợ lưu trữ trên mây thông qua DynamoDB và S3. Lưu trữ và hiển thị các log cho công tác tìm lỗi và bảo trì hệ thống. Với những ưu điểm trên, License Optimization có thể giảm lượng lớn công việc phân phối và kiểm toán license nhằm tiết kiệm thời gian và chi phí bỏ ra để duy trì hoạt động các lisence.\nĐây chỉ là sản phẩm demo, các chức năng có thể hoạt động không tử tế, vui lòng không sử dụng project này như là sản phẩm chính thức.\n"
+},
+{
+	"uri": "//localhost:1313/vi/3-ec2linking/3.1-linkingec2/",
+	"title": "Hướng dẫn kết nối EC2",
+	"tags": [],
+	"description": "",
+	"content": " Mục tiêu: Có thể lên terminal của máy chủ EC2, clone project về máy và khởi động được app.\nTruy cập vào giao diện quản trị của dịch vụ EC2. Click chọn một máy chủ EC2 dùng để chạy app. Lưu ý: Hãy chắc rằng bạn đã có một máy chủ public trong trạng thái đang hoạt động, có file keypair.pem của máy chủ đó. Nếu không hãy tham khảo lại ở các bước chuẩn bị\nHãy ghi nhớ Public IPv4 address của server. Mỗi khi tắt/dừng hoạt động server public IPv4 của máy chủ sẽ bị tắt và thay đổi, nên hãy nhớ kiểm tra thường xuyên. Tìm kiếm file chứa key pair và chạy máy chủ trên máy tính: mở terminal ở vị trí chứa file key pair. Sau khi mở Terminal, hãy nhập lệnh sau ssh -i \u0026quot;[tên file keypair].pem\u0026quot; ec2-user@[Public IPv4]. Bấm yes nếu bạn lần đầu tiên khởi động EC2 trên terminal để máy tính ghi nhận IP của máy chủ. Nếu màn hình bạn xuất hiện theo ảnh trên đây vậy xin chúc mừng. Bạn đã khởi động thành công máy chủ EC2 trên máy local. Từ giờ tôi sẽ gọi cửa sổ terminal đã liên kết với EC2 là máy chủ. Cấu hình AWS trong máy chủ: Nhập lệnh sudo yum install aws-cli -y để cài đặt AWS CLI. Nhập lệnh aws configure để cấu hình AWS CLI: Nhập Access key ID và Secret access key đã lưu trong file .csv ở bước tạo IAM user. Nhập Default region name: us-east-1 là khu vực mà bạn đã tạo máy chủ EC2. Nhập Default output format: json. Người dùng cần phải cấu hình AWS CLI để có thể khởi động các dịch vụ có trong app nếu không app sẽ từ chối hoạt động.\nClone project và chạy app từ git hub: Gõ lệnh sudo yum install git -y để cài đặt Git bash vào máy chủ. Sau khi cài đặt xong, clone repo ở đây bằng lệnh git clone https://github.com/Z3r0L0rd/license_optimize.git Đây là nơi chứa source code của app và được cài đặt quyền công khai nên không cần yêu cầu tài khoản git để clone về.\nNhập lệnh ls -li trong máy chủ để kiểm tra sự xuất hiện của file license_optimize. Di chuyển vào file bằng lệnh cd license_optimize, rồi sau đó dùng lại lệnh ls -li để xem bên trong tệp. Nhập lệnh chmod +x setup.sh và nhập lệnh ./setup.sh để cài đặt các dependencies và khởi tạo bảng dữ liệu. Sau đó nhập lệnh streamlit run streamlit_app.py --server.port=8501 --server.address=0.0.0.0 --server.headless=true để khởi động app trên máy chủ. Kiểm tra app thông qua đường dẫn http://[IPv4-address]:8501 nếu bạn thấy như trên hình thì bạn đã chạy app thành công. Bạn có thể dừng app lại bằng tổ hợp phím Ctrl + c trên màn hình terminal. Nhắc nhở: Các lỗi phát lỗi phát sinh trong quá trình làm vui lòng kiểm tra Các lỗi phát sinh\n"
+},
+{
+	"uri": "//localhost:1313/vi/",
+	"title": "License Optimization",
+	"tags": [],
+	"description": "",
+	"content": "License Optimization với Usage Tracking Tổng quan Trong cái lab này các bạn sẽ tìm hiểu cách tải và dựng app quản lý và tối ưu license và kiểm tra lưu lượng sử dụng license Nội dung Giới thiệu Các bước chuẩn bị Tạo kết nối đến máy chủ EC2 Các chức năng của app Dọn dẹp tài nguyên "
+},
+{
+	"uri": "//localhost:1313/vi/2-prerequiste/",
+	"title": "Các bước chuẩn bị",
+	"tags": [],
+	"description": "",
+	"content": "Tài khoản AWS Để thực hiện workshop này, bạn cần có tài khoản AWS để có thể truy cập vào AWS Management Console. Nếu bạn chưa có tài khoản, hãy đăng ký tại AWS. Bạn có thể sẽ cần thêm thẻ thanh toán quốc tế (Mastercard/Visa), nhưng bạn có thể truy cập và bắt đầu sử dụng các dịch vụ của AWS.\nBạn hãy bắt đầu đăng kí ngay hôm nay tại đây từ tháng sau tháng 7 để có cơ hội nhận đến 200$ credit để sử dụng cho các dịch vụ AWS.\nXây dựng một EC2 instance Bạn cần tạo chỉnh sang miền us-east-1 khi tạo EC2 để workshop có thể hoạt động\nĐể tìm hiểu cách tạo các EC2 instance các bạn có thể tham khảo bài lab Giới thiệu về Amazon EC2\nIAM User Nhằm phục vụ việc truy cập vào EC2 ta cần phải có một có một User(Access key của User). Có thể tạo User thông qua cách sau:\nVào trang Management Console của AWS. Đăng nhập với vai trò là root user. Xác thực đăng nhập nếu có(nên thiết lập các phương pháp đăng nhập). Nhập vào IAM trên thanh tìm kiếm và chọn lựa chọn theo hình. Ở thanh bên trái, bấm vào Users. Chọn Create user. Nhập tên User muốn tạo rồi bấm Next. Lưu ý: IAM user nếu không chọn Provide user access to the AWS Management Console-\u0026gt; I want to create an IAM user thì User được tạo ra sẽ không có mật khẩu lẫn quyền truy cập Management Console. Ở đây ta chỉ cần Access Key của User nên không cần tài khoản phải đăng nhập được, nếu các bạn muốn tài khoản có thể đăng nhập thì nên chọn như trên để có thể thêm mật khẩu.\nỞ mục Permissions options, chọn Attach Policies directly. Lần lượt chọn các policies trong Permissions policies sau: AdministratorAccess để có các quyền giống root account. AmazonEC2FullAccess cấp phép quyền tạo và quản lý EC2. AmazonDynamoDBFullAccess cấp phép quyền tạo và quản lý các bảng Dynamo. AmazonS3FullAccess cấp quyền tạo S3 bucket và đăng tải tài liệu. IAMFullAccess tạo IAM role,policies cho roles. CloudWatchLogsFullAccess tạo log groups. Chức năng sử dụng CloudWatch trong workshop vẫn đang trong quá trình phát triển nên có thể không hoạt động tốt.\nBấm Next, kiểm tra lại các permissions đã thêm rồi Nhấn vào Create user. Ta vào nhấp vào user đã thêm (có thể cần phải refresh lại page). Nhấp vào Security credentials. Tìm mục Access Keys và nhấn vào nút Create access key. Tại bước 1, nhấn vào lựa chọn CLI, xác nhận lựa chọn rồi bấm Next. Tại bước 2, nhập Workshop demo vào description hoặc không cần nhập, bấm Create access key. Ở bước 3, hãy ghi nhớ Access key và Secret access key hoặc đơn giản hơn là chọn nút Download .csv file để tải về máy, sau đó bấm done. Kiểm tra lại Access key. Bạn có thể tạo và sử dụng tối đa 2 access key cho mỗi user, hãy nhớ tắt/deactivated key khi không sử dụng đề phòng ai đó \u0026ldquo;vô tình\u0026rdquo; sử dụng cho mục đích riêng và khiến các bạn bị tính phí.\nCác dịch vụ các đã dùng khác Workshop này mặc dù các dịch vụ AWS đã được thiết lập tự động nhưng mà các bạn cũng có thể tìm hiểu qua các dịch vụ đã được sử dụng:\nGiới thiệu về Amazon DynamoDB Giới thiệu về Amazon S3 Giới thiệu về CloudWatch App này có sử dụng một số công nghệ khác các bạn có thể muốn biết.\n"
+},
+{
+	"uri": "//localhost:1313/vi/3-ec2linking/3.2-bugfixing/",
+	"title": "Các lỗi phát sinh",
+	"tags": [],
+	"description": "",
+	"content": "\rLưu ý: Những lỗi dưới đây được tôi phát hiện và tổng hợp trong lúc đang làm hugo này. Nếu các bạn phát hiện lỗi của mình không nằm trong đây vui lòng liên hệ chủ post hoặc tốt hơn là tự sửa lỗi và báo cáo lên cho chủ post =/\nỞ đây chúng ta sẽ thực hiện chỉnh sửa các lỗi xuất hiện trong lúc đang khởi động app:\nLỗi không thể kết nối đến máy chủ EC2:\nKiểm tra kĩ region: Bài app này được tạo và chỉ chạy trên region us-east-1. Bạn có thể kiểm tra trên cửa sổ của dịch vụ. Kiểm tra lại file keypair.pem đã được đặt đúng vị trí và có quyền truy cập của User. Đảm bảo rằng máy chủ EC2 đang hoạt động và nhập đúng public IPv4 address. Lưu ý rằng public IPv4 sẽ thay đổi mỗi lần khởi động lại máy chủ. Kiểm tra các Inbound rules của Security Group mà máy chủ đang sử dụng. Có thể truy cập vào thông qua **Click chọn máy chủ -\u0026gt; chọn mục Security -\u0026gt; Click vào Security Group (mặc định được tạo ra khi tạo máy chủ). Bắt buộc phải thiết lập 3 inbound IPv4 để app có thể liên kết như trên hình:\nMột IPv4 loại SSH, chạy Port 22 có thể sử dụng My IP hoặc 0.0.0.0/0 để liên kết lên máy chủ EC2 dễ dàng hơn. Một IPv4 loại HTTPS , chạy Port 443 dùng IP 0.0.0.0/0. Một IPv4 loại custom TCP, chạy Port 8501, dùng IP 0.0.0.0/0 để có thể chạy liên kết web app dễ dàng. Lưu ý: Chỉ nên thiết lập security group như trên trong các bài lab hoặc các project mang tính demo vì IP 0.0.0.0/0 sẽ cho tất cả mọi người tiếp cận và nguy cơ cao hệ thống bị xâm nhập. Nếu bạn muốn bảo mật hơn hãy sử dụng IP của mình hoặc IP của những người có quyền truy cập vào máy chủ.\nMáy chủ không thể Clone project github/ yêu cầu nhập tài khoản:\nHãy thử cài đặt lại Git mới nhất bằng lệnh sudo yum install git -y và thử lại. Nếu bạn phải đăng nhập tài khoản để có thể clone về thì chắc đã không clone project của tôi về. Hãy chắc chắn bạn đã đọc kĩ hướng dẫn và clone về từ https://github.com/Z3r0L0rd/license_optimize và đừng đăng nhập Git bằng máy chủ vì tôi đã thử rất nhiều lần nhưng vẫn không thể đăng nhập được. Không chạy được app trên máy chủ:\nKhông chạy được app trên máy chủ có thể bao gồm nhiều nguyên nhân nhưng tôi xin phép chia ra làm 3 nguyên nhân chính: Lý do vê thiết lập: Hãy kiểm tra các thiết lập về Inbound rules tôi đã đề cập ở mục 1, kiểm tra cấu hình AWS CLI bằng cách nhập đầy đủ thông tin access key lẫn secret key của User và kiểm tra xem có đang kích hoạt key không, Đảm bảo ghi region us-east-1 ở mục region. Sai liên kết: Liên kết là http://[IPv4Adress]:8501 với IPv4Address là địa chỉ public của IPv4 máy chủ và 8501 chính là Port mà app sẽ chạy, và đã tuyên chỉ định trong thiết lập Security Group. Lỗi về code: Nếu bạn đã làm đúng các bước trên mà vẫn không chạy được app thì có thể do lỗi code. Hãy kiểm tra lại các bước cài đặt dependencies thường sẽ tự động cài sẵn thông qua file setup.sh và chạy lại lệnh streamlit run streamlit_app.py --server.port=8501 --server.address=0.0.0.0 --server.headless=true. "
+},
+{
+	"uri": "//localhost:1313/vi/3-ec2linking/",
+	"title": "Liên kết với máy chủ",
+	"tags": [],
+	"description": "",
+	"content": "Ở bước này, chúng ta sẽ triển khai máy chủ EC2 và chạy máy chủ ở máy tính local của mình. Sau đó ta sẽ thiết lập máy chủ EC2 để clone project về máy chủ và thực hiện chạy nó trên môi trường máy chủ.\nNội dung Hướng dẫn kết nối EC2 Các lỗi phát sinh "
+},
+{
+	"uri": "//localhost:1313/vi/4-function/4.2-licensemanage/",
+	"title": "Quản lí Licenses",
+	"tags": [],
+	"description": "",
+	"content": "Quản lí Licenses bao gồm các chức năng CRUD (Create-Read-Update-Delete) các license, cập nhật các license theo thời gian thực lên dịch vụ DynamoBD của AWS\nBạn có thể thêm mới license vào và hệ thống sẽ tự động cập nhật dữ liệu lên Cloud. Trang web hỗ trợ 3 loại đăng kí: SUBCRIPTION(đăng kí), PERPETUAL(mua 1 lần) và CONCURRENT(sử dụng đồng thời) Các bạn có thể không điền ngày hết hạn thì app sẽ hiểu là license có hiệu lực vô thời hạn\nCác bạn chỉ có thể cập nhật số license đang sử dụng. "
+},
+{
+	"uri": "//localhost:1313/vi/4-function/4.3-compliance/",
+	"title": "Kiểm tra, phân tích, tổng kết",
+	"tags": [],
+	"description": "",
+	"content": "Kiểm tra tuân thủ là chức năng giúp người dùng đánh giá các rủi ro và Compliance được quy định trong các hợp đồng của các bên bán license. Bao gồm việc theo dõi hạn sử dụng của các license, đánh giá các hành vi bất thường nhằm bảo vệ người sử dụng khỏi các vấn đề pháp lý về quyền sử dụng các phần mềm.\nPhân tích mức độ sử dụng được sử dụng để quan sát và thông báo số lượng các license có hiệu quả sử dụng thấp(dưới 30%) và cao(trên 95% số license đã sử dụng) và các license sắp hết hạn sử dụng.\n"
+},
+{
+	"uri": "//localhost:1313/vi/4-function/",
+	"title": "Các chức năng của app",
+	"tags": [],
+	"description": "",
+	"content": "Trang app sẽ trình chiếu các license nhập vào dưới dạng biểu đồ và cột giúp người dùng có thể xem tình trạng sử dụng license của mình đồng thời, app cũng hỗ trợ nhập xuất thông tin, lưu trữ các thông người dùng đã nhập để gửi lên Cloud đề phòng các tình huống bất trắc, kèm theo các chức năng phân tích và dự đoán xu hướng sử dụng giúp cho người dùng vừa có thể dễ dàng hiểu tình trạng licenses của mình đồng thời biết được các lựa chọn tối ưu trong việc quản lý số lượng license của mình một cách tiết kiệm nhất.\nHướng dẫn: Trang web này khỉ mới khởi động sẽ không có bất kì dữ liệu gốc nào, yêu cầu người dùng tạo mới hoặc sử dụng dữ liệu mẫu của chúng tôi.\nVới lựa chọn tạo mới thì nên vào mục System Setup ở thanh tìm kiếm vào nhấn chọn vào nút Tạo Database Table trước khi thêm bất kì dữ liệu nào mới. Nếu bạn không thật sự không muốn lãng phí thời gian để làm dữ liệu mẫu, thì các bạn có thể truy cập vào dữ liệu mẫu để tải về và import ở mục Data Management và thả file bạn tải vào và nhấn nút Import Nếu các bạn import file mẫu từ một nguồn khác, xin hãy đảm bảo rằng file theo format của dữ liệu mẫu nếu không file sẽ không import vào thành công. Các chức năng của App Bảng điều khiển Quản lí Licenses Kiểm tra, phân tích, tổng kết Đề xuất thông minh Quản lý rủi ro Nhập xuất báo cáo Kiểm tra log Các chức năng hệ thống "
+},
+{
+	"uri": "//localhost:1313/vi/4-function/4.4-mlrecommend/",
+	"title": "Đề xuất thông minh",
+	"tags": [],
+	"description": "",
+	"content": "Đề xuất thông minh sẽ sử dụng mô hình máy học để đề xuất tối ưu hóa thông minh, dự đoán nhu cầu license trong tương lai, phát hiện usage bất thường cũng như đề xuất các phương pháp giảm chi phí cho người sử dụng.\n"
+},
+{
+	"uri": "//localhost:1313/vi/4-function/4.5-riskassessment/",
+	"title": "Quản lý rủi ro",
+	"tags": [],
+	"description": "",
+	"content": "Quản lý rủi ro là chức năng tính toán điểm rủi ro từ các license và đưa ra các lời khuyên nhằm giảm thiểu các rủi ro về lỗ hỏng tuân thủ,\n"
+},
+{
+	"uri": "//localhost:1313/vi/5-cleanup/",
+	"title": "Dọn dẹp tài nguyên  ",
+	"tags": [],
+	"description": "",
+	"content": "Chúng ta sẽ tiến hành các bước sau để xóa các tài nguyên chúng ta đã tạo trong bài thực hành này.\nXóa EC2 instance Truy cập giao diện quản trị dịch vụ EC2 Click Instances. Click chọn instance Public Linux Instance. Click Instance state. Click Terminate instance, sau đó click Terminate để xác nhận. Click Users. Click chọn user mà bạn đã tạo. Click Delete, sau đó điền tên user và click Delete để xóa user. Xóa S3 bucket Truy cập giao diện quản trị dịch vụ S3 Click chọn S3 bucket chúng ta đã tạo cho bài thực hành. ( Ví dụ : license-optimization-storage ) Click Empty. Điền permanently delete, sau đó click Empty để tiến hành xóa object trong bucket. Click Exit. Sau khi xóa hết object trong bucket, click Delete Điền tên S3 bucket, sau đó click Delete bucket để tiến hành xóa S3 bucket. Xóa DynamoDB Truy cập vào giao diện quản trị dịch vụ DynamoDB Click Tables.\nClick chọn Table chúng ta đã tạo\nClick Delete. Nhập Confirm và nhấn nut Delete để xác nhận xóa.\n"
+},
+{
+	"uri": "//localhost:1313/vi/4-function/4.6-ex-import/",
+	"title": "Nhập xuất báo cáo",
+	"tags": [],
+	"description": "",
+	"content": "Audit Reports,Data Management và S3 Storage đều là các chức năng dùng để lưu trữ dữ liệu, xuất dữ liệu và back-up dữ liệu tùy thuộc vào sự lựa chọn của người sử dụng.\nVới Data Management người dùng có thể Import dữ liệu từ một hoặc nhiều file dưới định dạng .csv vào trong app hoặc cũng có thể xuất file để lưu trữ. Với S3 Storage người dùng có thể lưu trữ dữ liệu của mình trên Cloud cụ thể là S3 bucket, giúp cho việc bảo mật dữ liệu tốt hơn và tránh mất dữ liệu trong trường hợp xảy ra sự cố với máy chủ. App cũng cung cấp giao diện để có thể tìm kiếm trên S3 giúp đơn giản hóa quá trình khôi phục dữ liệu. Với Audit Reports người dùng có thể kiểm toán tuân thủ và tạo các báo cáo về các license. "
+},
+{
+	"uri": "//localhost:1313/vi/4-function/4.7-log/",
+	"title": "Kiểm tra log",
+	"tags": [],
+	"description": "",
+	"content": "Kiểm tra Log là một chức năng dùng cho các nhà phát triển hoặc bảo trì giúp cho người có thể xem lại các log của hệ thống từ đó đễ dàng theo dõi các lỗi xuất hiện trong lúc app đang vận hành. Và các log này sẽ được lưu trữ dưới dạng file tiện cho việc tìm kiếm thông tin lỗi.\n"
+},
+{
+	"uri": "//localhost:1313/vi/4-function/4.8-systemsetup/",
+	"title": "Các chức năng hệ thống",
+	"tags": [],
+	"description": "",
+	"content": "Trung tâm vận hành là nơi để người dùng có thể kiểm tra các khả năng vận hành của app, cũng như kiểm tra sức khỏe app và phục hồi app phòng trường hợp không liên kết được với S3 storage.\nKiểm tra sức khỏe của hệ thống để phòng tránh app bị sập do không phát hiện kịp thời. Tạo các backup file và phục hồi ở máy local phòng trường hợp bất trắc. "
+},
+{
+	"uri": "//localhost:1313/vi/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "//localhost:1313/vi/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]
