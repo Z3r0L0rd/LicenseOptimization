@@ -1,6 +1,8 @@
 # Change the default theme to be use when building the site with Hugo
 theme = "hugo-theme-learn"
 baseURL = "https://z3r0l0rd.github.io/LicenseOptimization/"
+relativeURLs = true
+canonifyURLs = true
 
 # For search functionality
 [outputs]
